@@ -98,6 +98,8 @@ if [[ $BROWSER == 1 ]]; then
   for pair in brave:BraveSoftware/Brave-Browser chromium:chromium chrome:google-chrome; do
     browser=${pair%%:*}
     [[ -d "$HOME/.config/${pair#*:}" ]] || command -v "$browser" >/dev/null || continue
+    # Replace an earlier NextVault registration (it may point at an old path).
+    rm -f "$HOME/.config/${pair#*:}/NativeMessagingHosts/com.dohotstudio.nextvault.json"
     if "$PREFIX/nextvault-native-host" install "$EXTENSION_ID" "$browser" >/dev/null 2>&1; then
       registered+=" $browser"
     fi
